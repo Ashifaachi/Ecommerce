@@ -1,0 +1,119 @@
+{% extends 'admin1/base.html' %}
+{% block content %}
+<br><br><br><br>
+
+<div class="container mt-4 bg-light text-dark rounded-3 p-4 text-center mt-4 " style="box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);">
+    <br><br><br><br><br>
+    <h2 class="text-dark " style="font-family: 'Poppins', sans-serif; font-weight: bold; font-size: 30px; color: #000; text-shadow: 0 2 10px 0 rgba(0, 0, 0, 0.5); ">Edit Slide</h2>
+    <br><br>
+
+    {% if message %}
+    <div class="alert alert-info">{{ message }}</div>
+    {% endif %}
+
+
+    <!-- List of All Slides -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Available Slides</h4>
+                    <br><br><br><br><br>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Heading</th>
+                                    <th>Sub Heading</th>
+                                    <th>Price</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for slide in all_slides %}
+                                <tr>
+                                    <td><img src="{{ slide.add_image.url }}" alt="Slide Image" style="max-width: 100px;"></td>
+                                    <td>{{ slide.add_head }}</td>
+                                    <td>{{ slide.add_sub_head }}</td>
+                                    <td>Rs {{ slide.add_price }}</td>
+                                    <td>{{ slide.start_time|date:"Y-m-d H:i" }}</td>
+                                    <td>{{ slide.end_time|date:"Y-m-d H:i" }}</td>
+                                    <td>
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="slider_id" value="{{ slide.id }}">
+                                            <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Form -->
+    {% if slider %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Edit Slide Details</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="update_slide" value="1">
+                <input type="hidden" name="slider_id" value="{{ slider.id }}">
+
+                <div class="form-group mb-3">
+                    <label for="add_head">Heading:</label>
+                    <input type="text" id="add_head" name="add_head" value="{{ slider.add_head }}" class="form-control" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="add_sub_head">Sub Heading:</label>
+                    <input type="text" id="add_sub_head" name="add_sub_head" value="{{ slider.add_sub_head }}" class="form-control" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="add_text">Text:</label>
+                    <input type="text" id="add_text" name="add_text" value="{{ slider.add_text }}" class="form-control" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="add_price">Price:</label>
+                    <input type="number" step="0.01" id="add_price" name="add_price" value="{{ slider.add_price }}" class="form-control" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="add_image">Current Image:</label>
+                    <img src="{{ slider.add_image.url }}" alt="Current Image" style="max-width: 200px; display: block; margin-bottom: 10px;">
+                    <input type="file" id="add_image" name="add_image" class="form-control">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="start_time">Start Time:</label>
+                    <input type="datetime-local" id="start_time" name="start_time" value="{{ slider.start_time|date:'Y-m-d\TH:i' }}" class="form-control" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="end_time">End Time:</label>
+                    <input type="datetime-local" id="end_time" name="end_time" value="{{ slider.end_time|date:'Y-m-d\TH:i' }}" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update Slide</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<br><br><br><br><br>
+
+{% endblock %}

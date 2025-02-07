@@ -1,0 +1,295 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title %}
+URBAN CART
+{% endblock %}
+{% block content %}
+
+<section>
+    <div class="container">
+        <div class="row">
+            
+            {% if search_products %}
+            <div class="col-sm-12 padding-right">
+                <div class="features_items"><!--features_items-->
+                    <h2 class="title text-center">Search Items</h2>
+                    {% for product in search_products %}
+                    <div class="col-sm-3" style="max-height: 600px; min-height: 600px;">
+                       
+                        <div class="product-image-wrapper">
+                            
+                            <div class="single-products">
+                                
+                                
+
+                                    <div class="productinfo text-center" style="max-height: 500px; min-height: 500px;">
+                                        <a href="{% url 'product_details' product.id %}">
+                                        
+                                        <img style="max-height: 200px; min-height: 200px;" src="{{ product.image_url }}" alt="Not Found" />
+                                        <h2> RS {{ product.discount_price }}</h2>
+                                        <h4><del style="color: #817f7f;">RS {{ product.actual_price }}</del></h4>
+                                        <p>{{ product.name }}</p></a>
+                                        <form action="{% url 'add_to_cart' product.id %}" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                                        <input type="number" name="product_stock" class="form-control" placeholder="Quantity" min="1" max="{{ product.product_stock }}" ><br>
+                                        <button type="submit" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
+                                        </form>
+                                       
+                                    </div>
+                                    
+                                    
+                                    
+                            </div>
+                            <!-- <div class="choose">
+                                <ul class="nav nav-pills nav-justified">
+                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                </ul>
+                            </div> -->
+                            
+                        </div>
+                        
+                    </div>
+                    {% endfor %}
+                
+                  
+                
+                 
+                </div>
+                
+            </div>
+            
+            {% else %}
+        <!-- </div> -->
+            
+            <div class="col-sm-12 padding-right">
+                <div class="features_items"><!--features_items-->
+                    <h2 class="title text-center">Features Items</h2>
+                    {% for product in products %}
+                    <div class="col-sm-3" style="max-height: 600px; min-height: 600px;">
+                       
+                        <div class="product-image-wrapper">
+                            
+                            <div class="single-products">
+                                
+                                
+
+                                    <div class="productinfo text-center" style="max-height: 500px; min-height: 500px;">
+                                        <a href="{% url 'product_details' product.id %}">
+                                        
+                                        <img style="max-height: 200px; min-height: 200px;" src="{{ product.image_url }}" alt="" />
+                                        <h2> RS {{ product.discount_price }}</h2>
+                                        <h4><del style="color: #817f7f;">RS {{ product.actual_price }}</del></h4>
+                                        <p>{{ product.name }}</p></a>
+                                        <form action="{% url 'add_to_cart' product.id %}" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                                        <input type="number" name="product_stock" class="form-control" placeholder="Quantity" min="1" max="{{ product.product_stock }}" ><br>
+                                        <button type="submit" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
+                                        </form>
+                                    
+                                       
+                                    </div>
+                                    
+                                    
+                                    
+                            </div>
+                            <!-- <div class="choose">
+                                <ul class="nav nav-pills nav-justified">
+                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                </ul>
+                            </div> -->
+                            
+                        </div>
+                        
+                    </div>
+                    {% endfor %}
+                
+                  
+                
+                 
+                </div>
+                       
+            </div>
+            {% endif %}
+        </div>
+                <!-- <nav aria-label="Page navigation example" style="text-align: center;">
+                    <ul class="pagination justify-content-center">
+                        {% if products.has_previous %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a>
+                      </li>
+                      {% endif %}
+                      {% for page_num in products.paginator.page_range %}
+                      <li class="page-item"><a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a></li>
+                      {% endfor %}
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      {% if products.has_next %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ products.next_page_number }}">Next</a>
+                      </li>
+                      {% endif %}
+                    </ul>
+                  </nav> -->
+                  <nav aria-label="Page navigation example" style="text-align: center;">
+                    <ul class="pagination justify-content-center">
+                        {% if products.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1">First</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a>
+                            </li>
+                        {% endif %}
+                
+                        <!-- {% comment %} Show the first 5 page numbers {% endcomment %}
+                        {% for page_num in products.paginator.page_range|slice:":5" %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                            </li>
+                        {% endfor %} -->
+                
+                        {% comment %} Show the page range around the current page (previous 5, next 5) {% endcomment %}
+                        {% if products.number > 5 %}
+                            <li class="page-item disabled">
+                                <span class="page-link">...</span>
+                            </li>
+                        {% endif %}
+                
+                        {% for page_num in products.paginator.page_range %}
+                            {% if page_num >= products.number|add:'-5' and page_num <= products.number|add:'5' %}
+                                <li class="page-item {% if page_num == products.number %}active{% endif %}">
+                                    <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                
+                        {% if products.number < products.paginator.num_pages|add:'-5' %}
+                            <li class="page-item disabled">
+                                <span class="page-link">...</span>
+                            </li>
+                        {% endif %}
+                
+                        <!-- {% comment %} Show the last 5 page numbers {% endcomment %}
+                        {% for page_num in products.paginator.page_range|slice:"-5:" %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                            </li>
+                        {% endfor %} -->
+                
+                        {% if products.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ products.next_page_number }}">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ products.paginator.num_pages }}">Last</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                  <!--features_items-->
+                <!--recommended_items-->
+                <!-- <div class="recommended_items">
+                    <h2 class="title text-center">recommended items</h2>
+                    
+                    <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="item active">	
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="{% static 'products/images/home/recommend1.jpg' %}" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <a href="{% url 'cart' %}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="{% static 'products/images/home/recommend2.jpg' %}" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <a href="{% url 'cart' %}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="{% static 'products/images/home/recommend3.jpg' %}" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <a href="{% url 'cart' %}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">	
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="{% static 'products/images/home/recommend1.jpg' %}" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <a href="{% url 'cart' %}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="{% static 'products/images/home/recommend2.jpg' %}" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <a href="{% url 'cart' %}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="{% static 'products/images/home/recommend3.jpg' %}" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <a href="{% url 'cart' %}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                          </a>
+                          <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                          </a>			
+                    </div>
+                </div> -->
+                <!--/recommended_items-->
+         
+    </div>
+</section>
+{% endblock %}

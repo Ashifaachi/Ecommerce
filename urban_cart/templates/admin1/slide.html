@@ -1,0 +1,72 @@
+{% extends 'admin1/base.html' %}
+
+{% block title %} 
+URBAN CART
+{% endblock %}
+
+{% block content %}
+<div class="container" style="color: black; padding: 2%;">
+    <div class="row text-center">
+        <div class="mb-3 row" style="margin-bottom: 1%;">
+            <h1></h1><label class="col-sm-12 col-form-label"><a href="index.html">ADD - <span style="color: red;">Slide</span></a></label></h1>
+
+        </div>
+        <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3 row" style="margin-bottom: 1%;">
+            <label for="" class="col-sm-2 col-form-label">Add Image</label>
+            <div class="col-sm-10">
+            <input type="file" class="form-control" id="inputGroupFile01" name="add_image">
+            </div>
+          </div>
+          <div class="mb-3 row" style="margin-bottom: 1%;">
+            <label for="" class="col-sm-2 col-form-label">Add Head</label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputGroupFile01" name="add_head">
+            </div>
+          </div>
+          <div class="mb-3 row" style="margin-bottom: 1%;">
+            <label for="" class="col-sm-2 col-form-label">Add Sub Head</label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputGroupFile01" name="add_sub_head">
+            </div>
+          </div>
+          <div class="mb-3 row" style="margin-bottom: 1%;">
+            <label for="" class="col-sm-2 col-form-label">Add text</label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputGroupFile01" name="add_text">
+            </div>
+          </div>
+          <div class="mb-3 row" style="margin-bottom: 1%;">
+            <label for="" class="col-sm-2 col-form-label">Add price</label>
+            <div class="col-sm-10">
+            <input type="number" class="form-control" id="inputGroupFile01" name="add_price">
+            </div>
+          </div>
+          <div class="mb-3 row" style="margin-bottom: 1%;">
+            <label for="" class="col-sm-2 col-form-label">Start Time</label>
+            <div class="col-sm-10">
+            <input type="datetime-local" class="form-control" id="inputGroupFile01" name="start_time">
+            </div>
+          </div>
+          <div class="mb-3 row" style="margin-bottom: 1%;">
+            <label for="" class="col-sm-2 col-form-label">End Time</label>
+            <div class="col-sm-10">
+            <input type="datetime-local" class="form-control" id="inputGroupFile01" name="end_time">
+            </div>
+          </div>
+         
+          <!-- <button class="" type="submit">Add Item</button> -->
+          <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-primary" type="submit">Add Slide</button>
+          </div>
+        </form>
+        
+          
+    </div>
+   
+</div>
+	
+
+{% endblock %}
+	

@@ -1,0 +1,87 @@
+{% extends 'admin1/base.html' %}
+
+{% block title %} 
+URBAN CART
+{% endblock %}
+
+{% block content %}
+
+		<!--list-topics start -->
+		<section id="list-topics" class="list-topics">
+			<div class="container">
+				<div class="list-topics-content">
+					<ul>
+						<li>
+							<div class="single-list-topics-content">
+								<div class="single-list-topics-icon">
+									<i class="fa fa-cart-plus fa-5x fa-fw" aria-hidden="true"></i>
+								</div>
+								<h2><a href="{% url 'add_item' %}">Add Item</a></h2>
+								<p>150 Items</p>
+							</div>
+						</li>
+						<li>
+							<div class="single-list-topics-content">
+								<div class="single-list-topics-icon">
+									<i class="fa fa-trash fa-5x fa-fw" aria-hidden="true"></i>
+								</div>
+								<h2><a href="{% url 'delete_item' %}">Delete Item</a></h2>
+								<p>214 Items</p>
+							</div>
+						</li>
+						<li>
+							<div class="single-list-topics-content">
+								<div class="single-list-topics-icon">
+									<i class="fa fa-pencil-square-o fa-5x fa-fw" aria-hidden="true"></i>
+								</div>
+								<h2><a href="{% url 'update_item' %}">Update Item</a></h2>
+								<p>185 Items</p>
+							</div>
+						</li>
+						<li>
+							<div class="single-list-topics-content">
+								<div class="single-list-topics-icon">
+									<i class="fa fa-list-alt fa-5x fa-fw" aria-hidden="true"></i>
+								</div>
+								<h2><a href="{% url 'list_item' %}">List Item</a></h2>
+								<p>200 Items</p>
+							</div>
+						</li>
+						<li>
+							<div class="single-list-topics-content">
+								<div class="single-list-topics-icon">
+									<i class="fa fa-slideshare fa-5x fa-fw" aria-hidden="true"></i>
+								</div>
+								<h2><a href="{% url 'slide' %}">Add Ads</a></h2>
+								<p>120 Ads</p>
+							</div>
+						</li>
+						<li>
+							<div class="single-list-topics-content">
+								<div class="single-list-topics-icon">
+									<i class="fa fa-pencil fa-5x fa-fw" aria-hidden="true"></i>
+								</div>
+								<h2><a href="{% url 'edit_slide' %}">Edit Ads</a></h2>
+								<p>Edit Slides</p>
+							</div>
+						</li>
+						<li>
+							<div class="single-list-topics-content">
+								<div class="single-list-topics-icon">
+									<i class="fa fa-trash fa-5x fa-fw" aria-hidden="true"></i>
+								</div>
+								<h2><a href="{% url 'delete_slide' %}">Delete Ads</a></h2>
+								<p>Delete Slides</p>
+							</div>
+						</li>
+
+					</ul>
+				</div>
+			</div><!--/.container-->
+
+		</section><!--/.list-topics-->
+		<!--list-topics end-->
+	
+
+{% endblock %}
+	

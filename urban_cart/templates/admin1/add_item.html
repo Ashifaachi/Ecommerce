@@ -1,0 +1,174 @@
+{% extends 'admin1/base.html' %}
+{% block content %}
+<br><br><br><br>
+
+<div class="container mt-4 bg-light text-dark rounded-3 p-4 text-center mt-4" style="box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);">
+    <br><br>
+    <h2 class="text-dark" style="font-family: 'Poppins', sans-serif; font-weight: bold; font-size: 30px; color: #000; text-shadow: 0 2 10px 0 rgba(0, 0, 0, 0.5);">Add New Item</h2>
+    <br><br>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Add Item Form -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Item Details</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Left Column -->
+                        <div class="form-group mb-3">
+                            <label for="name">Product Name:</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="manufacturer">Manufacturer:</label>
+                            <select id="manufacturer" name="manufacturer" class="form-control" required>
+                                <option value="" selected disabled>Select Manufacturer</option>
+                                {% for man in manufacturer %}
+                                    <option value="{{ man.name }}">{{ man.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="main_category">Main Category:</label>
+                            <select id="main_category" name="main_category" class="form-control" required>
+                                <option value="" selected disabled>Select Main Category</option>
+                                {% for main in main_category %}
+                                    <option value="{{ main.name }}">{{ main.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="sub_category">Sub Category:</label>
+                            <select id="sub_category" name="sub_category" class="form-control" required>
+                                <option value="" selected disabled>Select Sub Category</option>
+                                {% for sub in sub_category %}
+                                    <option value="{{ sub.name }}">{{ sub.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="image_url">Image URL:</label>
+                            <input type="url" id="image_url" name="image_url" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <!-- Right Column -->
+                        <div class="form-group mb-3">
+                            <label for="site_link">Site URL:</label>
+                            <input type="url" id="site_link" name="site_link" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="ratings">Rating:</label>
+                            <input type="number" id="ratings" name="ratings" step="0.01" min="0" max="5" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="no_of_ratings">Number of Ratings:</label>
+                            <input type="number" id="no_of_ratings" name="no_of_ratings" min="0" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="actual_price">Actual Price:</label>
+                            
+                                
+                                <input type="number" id="actual_price" name="actual_price" step="0.01" min="0" class="form-control" required>
+                            
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="discount_price">Discount Price:</label>
+                            
+                                <!-- <span class="input-group-text">Rs</span> -->
+                                <input type="number" id="discount_price" name="discount_price" step="0.01" min="0" class="form-control" required>
+                            
+                        </div>
+
+                        
+                    </div>
+                    <div class="form-group mb-3 col-md-6 text-center">
+                      <label for="product_stock">Product Stock:</label>
+                      <input type="number" id="product_stock" name="product_stock" min="0" value="100" class="form-control" required>
+                  </div>
+                </div>
+                <br><br>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Add Item</button>
+                    <br><br>
+                    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+        <br><br>
+        
+    </div>
+    <br><br>
+</div>
+<br><br><br><br>
+
+<!-- Preview Image Script -->
+<script>
+$(document).ready(function() {
+    
+
+    // Form validation
+    $('form').on('submit', function(e) {
+        const actualPrice = parseFloat($('#actual_price').val());
+        const discountPrice = parseFloat($('#discount_price').val());
+        
+        if (discountPrice > actualPrice) {
+            e.preventDefault();
+            alert('Discount price cannot be greater than actual price');
+        }
+    });
+});
+</script>
+
+<style>
+.card {
+    border: none;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.input-group-text {
+    background-color: #f8f9fa;
+}
+
+.btn-primary {
+    padding: 8px 20px;
+}
+
+.btn-secondary {
+    padding: 8px 20px;
+}
+</style>
+
+{% endblock %}

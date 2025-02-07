@@ -1,0 +1,175 @@
+{% extends 'home/base.html' %}
+{% block title %}URBAN CART{% endblock %}
+{% load static %}
+{% load i18n %}
+
+
+{% block content %}
+{% if sliders %}
+<!-- Slider Section -->
+<section id="slider">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        {% for slide in sliders %}
+                            <li data-target="#slider-carousel" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+                        {% endfor %}
+                    </ol>
+
+                    <!-- Carousel Items -->
+                    <div class="carousel-inner">
+                        {% for slide in sliders %}
+                            <div class="item {% if forloop.first %}active{% endif %}">
+                                <div class="col-sm-6">
+                                    <h1>{{ slide.add_head }}</h1>
+                                    <h2>{{ slide.add_sub_head }}</h2>
+                                    <p>{{ slide.add_text }}</p>
+                                    <h5>Off up to RS {{ slide.add_price }}</h5>
+                                    <button type="button" class="btn btn-default get">
+                                        <a style="text-decoration: none; color: white;" href="{% url 'product_list' %}">Get it now</a>
+                                    </button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="{{ slide.add_image.url }}" class="girl img-responsive" alt="Slide Image" />
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Controls -->
+                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<br><br><br><br><br>
+<section id="list-topics" class="list-topics">
+    <div class="container">
+        <div class="list-topics-content">
+            <ul style="display: flex; justify-content: space-between;">
+                <li>
+                    <div class="single-list-topics-content text-center">
+                        <div class="single-list-topics-icon">
+                            
+                        </div>
+                        <img class="bd-placeholder-img card-img-top" width="100%" height="150" src="{% static 'home/images/home/casual_shoes2.jpg' %}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" style="border-radius: 50px;">
+                        <h3><a style="text-decoration: none; color: rgba(0, 0, 0, 0.5);" href="{% url 'product_category' '1' %}">Casual Shoes</a></h3>
+                        
+                    </div>
+                </li>
+                <li>
+                    <div class="single-list-topics-content text-center">
+                        <div class="single-list-topics-icon">
+                            
+                        </div>
+                        <img class="bd-placeholder-img card-img-top" width="100%" height="150" src="{% static 'home/images/home/formal_shoes.jpg' %}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" style="border-radius: 50px;">
+                        <h3><a style="text-decoration: none; color: rgba(0, 0, 0, 0.5);" href="{% url 'product_category' '2' %}">Formal Shoes</a></h3>
+                        
+                    </div>
+                </li>
+                <li>
+                    <div class="single-list-topics-content text-center">
+                        <div class="single-list-topics-icon">
+                            
+                        </div>
+                        <img class="bd-placeholder-img card-img-top" width="100%" height="150" src="{% static 'home/images/home/casual_shoes1.jpg' %}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" style="border-radius: 50px;">
+                        <h3><a style="text-decoration: none; color: rgba(0, 0, 0, 0.5);" href="{% url 'product_category' '3' %}">Sports Shoes</a></h3>
+                        
+                    </div>
+                </li>
+                <li>
+                    <div class="single-list-topics-content text-center">
+                        <div class="single-list-topics-icon">
+                            
+                        </div>
+                        <img class="bd-placeholder-img card-img-top" width="100%" height="150" src="{% static 'home/images/home/kids_shoes.jpg' %}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" style="border-radius: 50px;">
+                        <h3><a style="text-decoration: none; color: rgba(0, 0, 0, 0.5);" href="{% url 'product_category' '4' %}">Kids Shoes</a></h3>
+                        
+                    </div>
+                </li>
+                
+                
+                
+              
+            </ul>
+
+
+        </div>
+    </div>
+</section>
+<br><br><br><br><br>
+
+
+
+
+
+
+<!-- home/index.html -->
+{% for category in subcategory_products %}
+<div class="recommended_items">
+    <h2 class="title text-center">{{ category.name }}</h2>
+    {% if category.products %}
+        <div id="category-carousel-{{ forloop.counter }}" class="carousel slide" data-ride="carousel" data-interval="3000">
+            <div class="carousel-inner">
+                {% for chunk in category.product_chunks %}
+                    <div class="item {% if forloop.first %}active{% endif %}">
+                        {% for product in chunk %}
+                            <div class="col-sm-4">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center" style="max-height: 500px; min-height: 500px;">
+                                            <a href="{% url 'product_details' product.id %}">
+                                                <img style="max-height: 300px; min-height: 300px;" 
+                                                     src="{{ product.image_url }}" 
+                                                     alt="{{ product.name }}" />
+                                                <h2>RS {{ product.discount_price }}</h2>
+                                                <h4><del style="color: #817f7f;">RS {{ product.actual_price }}</del></h4>
+                                                <p>{{ product.name }}</p>
+                                            </a>
+                                            <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                                <input type="hidden" name="next" value="{{ request.path }}">
+                                                <input type="hidden" name="quantity" value="1" />
+                                                <button type="submit" class="btn btn-default add-to-cart">
+                                                    <i class="fa fa-shopping-cart"></i> Add to cart
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Controls -->
+            <a class="left recommended-item-control" href="#category-carousel-{{ forloop.counter }}" data-slide="prev">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <a class="right recommended-item-control" href="#category-carousel-{{ forloop.counter }}" data-slide="next">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </div>
+    {% else %}
+        <p>No products available in this category.</p>
+    {% endif %}
+</div>
+<br><br><br><br><br>
+{% endfor %}
+
+
+
+{% endblock %}

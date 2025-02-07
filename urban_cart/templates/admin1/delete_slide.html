@@ -1,0 +1,94 @@
+{% extends 'admin1/base.html' %}
+{% block content %}
+<br><br><br><br>
+
+<div class="container mt-4 bg-light text-dark rounded-3 p-4 text-center mt-4 " style="box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);">
+    <br><br><br><br><br>
+    <h2 class="text-dark " style="font-family: 'Poppins', sans-serif; font-weight: bold; font-size: 30px; color: #000; text-shadow: 0 2 10px 0 rgba(0, 0, 0, 0.5); ">Delete Slide</h2>
+    <br><br>
+
+
+
+
+    {% if message %}
+    <div class="alert alert-info">{{ message }}</div>
+    {% endif %}
+
+    <!-- List of All Slides -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h4>Available Slides</h4>
+                </div>
+                <br><br><br><br><br>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Heading</th>
+                                    <th>Sub Heading</th>
+                                    <th>Price</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for slide in all_slides %}
+                                <tr>
+                                    <td><img src="{{ slide.add_image.url }}" alt="Slide Image" style="max-width: 100px;"></td>
+                                    <td>{{ slide.add_head }}</td>
+                                    <td>{{ slide.add_sub_head }}</td>
+                                    <td>RS {{ slide.add_price }}</td>
+                                    <td>{{ slide.start_time|date:"Y-m-d H:i" }}</td>
+                                    <td>{{ slide.end_time|date:"Y-m-d H:i" }}</td>
+                                    <td>
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="slider_id" value="{{ slide.id }}">
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Dialog -->
+    {% if slider and confirm %}
+    <div class="card mb-4">
+        <div class="card-header bg-danger text-white">
+            <h4>Confirm Deletion</h4>
+        </div>
+        <div class="card-body">
+            <h5>Are you sure you want to delete this slide?</h5>
+            <div class="mb-3">
+                <strong>Heading:</strong> {{ slider.add_head }}<br>
+                <strong>Sub Heading:</strong> {{ slider.add_sub_head }}<br>
+                <strong>Price:</strong> RS {{ slider.add_price }}<br>
+                <img src="{{ slider.add_image.url }}" alt="Slide Image" style="max-width: 200px;" class="mt-2">
+            </div>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="slider_id" value="{{ slider.id }}">
+                <input type="hidden" name="confirm_delete" value="true">
+                <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                <a href="{% url 'delete_slide' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+    <br><br><br><br><br>
+</div>
+<br><br><br><br><br>
+
+{% endblock %}

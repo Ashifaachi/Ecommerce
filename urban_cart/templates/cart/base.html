@@ -1,0 +1,265 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>
+		{% block title %} 
+		
+		URBAN CART
+
+		{% endblock %}
+
+	</title>
+
+    <link href="{% static 'home/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'home/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'home/css/prettyPhoto.css' %}" rel="stylesheet">
+    <link href="{% static 'home/css/price-range.css' %}" rel="stylesheet">
+    <link href="{% static 'home/css/animate.css' %}" rel="stylesheet">
+	<link href="{% static 'home/css/main.css' %}" rel="stylesheet">
+	<link href="{% static 'home/css/responsive.css' %}" rel="stylesheet">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <!-- <link rel="shortcut icon" href="{% static 'home/images/ico/favicon.ico' %}"> -->
+	<link rel="shortcut icon" type="image/icon" href="{% static 'home/images/home/logo.png' %}"/>
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'home/images/ico/apple-touch-icon-144-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'home/images/ico/apple-touch-icon-114-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'home/images/ico/apple-touch-icon-72-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" href="{% static 'home/images/ico/apple-touch-icon-57-precomposed.png' %}">
+</head><!--/head-->
+
+<body>
+	<header id="header"><!--header-->
+       
+		
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a href=""><img src="{% static 'home/images/home/logo.png' %}" style="height: 70px; width: 70px;" alt="" /></a>
+						</div>
+                        <div class="companyinfo">
+							<a href="{% url 'index' %}"><h2><span>URBAN</span> CART</h2></a>
+                          
+							
+						</div>
+						
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-nav">
+								<li><a href="{% url 'account' %}"><i class="fa fa-user"></i> Account</a></li>
+                                <li><a href="{% url 'login' %}"><i class="fa fa-lock"></i> Login</a></li>
+								
+								<li><a href="{% url 'orders' %}"><i class="fa fa-crosshairs"></i> Order</a></li>
+								<li><a href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								
+                                <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Logout</a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+                <div class="row">
+                    <div class="btn-group pull-right">
+                            <form action="" method="post">
+						
+                                <div class="col-sm-9">
+                                    <div class="container-fluid">
+                                        {% csrf_token %}
+                                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="container-fluid">
+                                        <button class="btn btn-outline-success" type="submit">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+							
+						</div>
+
+                </div>
+			</div>
+		</div><!--/header-middle-->
+	
+		<div class="header-bottom"><!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a href="{% url 'index' %}" class="active">Home</a></li>
+								<li><a href="{% url 'product_list' %}">All Products</a></li>
+								<li><a href="{% url 'product_category' 'casual' %}">Casual Shoes</a></li>
+								<li><a href="{% url 'product_category' 'formal' %}">Formal Shoes</a></li>
+								<li><a href="{% url 'product_category' 'sports' %}">Sports Shoes</a></li>
+								<li><a href="{% url 'product_category' 'kids' %}">Kids Shoes</a></li>
+								
+							</ul>
+
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div><!--/header-bottom-->
+	</header>
+	<main>
+        {% block content %}
+        <!-- Default content -->
+        {% endblock %}
+    </main>     
+
+   
+     <!--Footer-->
+    <footer id="footer">
+		
+		
+		<div class="footer-widget">
+			<div class="container text-center">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Service</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">Online Help</a></li>
+								<li><a href="">Contact Us</a></li>
+								<li><a href="#">Order Status</a></li>
+								<li><a href="#">Change Location</a></li>
+								<li><a href="#">FAQ's</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- <div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Quock Shop</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">T-Shirt</a></li>
+								<li><a href="#">Mens</a></li>
+								<li><a href="#">Womens</a></li>
+								<li><a href="#">Gift Cards</a></li>
+								<li><a href="#">Shoes</a></li>
+							</ul>
+						</div>
+					</div> -->
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Policies</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">Terms of Use</a></li>
+								<li><a href="#">Privecy Policy</a></li>
+								<li><a href="#">Refund Policy</a></li>
+								<li><a href="#">Billing System</a></li>
+								<li><a href="#">Ticket System</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>About URBAN CART</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">Company Information</a></li>
+								<li><a href="#">Careers</a></li>
+								<li><a href="#">Store Location</a></li>
+								<li><a href="#">Affillate Program</a></li>
+								<li><a href="#">Copyright</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-3 col-sm-offset-1">
+						<div class="single-widget">
+							<h2>About URBAN CART</h2>
+							<form action="" class="searchform" method="POST">
+								{% csrf_token %}
+								<input type="text" placeholder="Your email address" name="email" />
+								<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+								<p>Get the most recent updates from <br />our site and be updated your self...</p>
+							</form>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+				<div class="container text-center">
+					<div class="row">
+						<div class="companyinfo">
+							<h2><a href="{% url 'index' %}"><span>URBAN</span> CART </a></h2>
+							
+						</div>
+	
+					</div>
+				</div>
+			
+		</div>
+		
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<p class="pull-left">Copyright © 2025 URBAN CART Inc. All rights reserved.</p>
+					<p class="pull-right">Designed by <span><a target="_blank" href="{% url 'index' %}">URBAN CART</a></span></p>
+				</div>
+			</div>
+		</div>
+        <div class="footer-bottom">
+            <div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="contactinfo">
+							<ul class="nav nav-pills">
+								<li><a href="#"><i class="fa fa-phone"></i> +91 9876543210</a></li>
+								<li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="social-icons pull-right">
+							<ul class="nav navbar-nav">
+								<li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
+								<li><a href="https://x.com/i/flow/login"><i class="fa fa-twitter"></i></a></li>
+								<li><a href="https://in.linkedin.com/"><i class="fa fa-linkedin"></i></a></li>
+								<li><a href="https://support.google.com/answer/2451065?hl=en"><i class="fa fa-google-plus"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+        </div>
+		
+		
+	</footer><!--/Footer-->
+	
+
+  
+    <script src="{% static 'home/js/jquery.js' %}"></script>
+	<script src="{% static 'home/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'home/js/jquery.scrollUp.min.js' %}"></script>
+	<script src="{% static 'home/js/price-range.js' %}"></script>
+    <script src="{% static 'home/js/jquery.prettyPhoto.js' %}"></script>
+    <script src="{% static 'home/js/main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

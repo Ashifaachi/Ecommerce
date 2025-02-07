@@ -1,0 +1,6 @@
+{% extends "pyments/base.html" %}
+{% block content %}
+<h2>Payment Canceled ❌</h2>
+<p>Your payment was canceled. You can try again.</p>
+<a href="{% url 'checkout' %}" class="btn btn-warning">Retry Payment</a>
+{% endblock %}

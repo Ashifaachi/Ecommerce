@@ -1,0 +1,77 @@
+{% extends 'payments/base.html' %}
+{% block title %}
+URBAN CART
+{% endblock %}
+{% block content %}
+
+<section id="do_action">
+    <div class="container">
+
+
+
+
+        
+        <div class="heading">
+            <h3>What would you like to do next?</h3>
+            <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="chose_area">
+                    <h2>Checkout</h2>
+
+                   
+   
+                   
+    <h3>Order Summary</h3>
+    <ul>
+        {% for item in cart_items %}
+            <li>{{ item.product.name }} (x{{ item.quantity }}) - {{ item.product.discount_price|floatformat:2 }}</li>
+        {% endfor %}
+    </ul>
+
+    <p><strong>Total:</strong> RS{{ total_price|floatformat:2 }}</p>
+    
+    <button id="rzp-button1">Continue Payment</button>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var options = {
+            "key": "{{ razorpay_key_id }}",  // Fetching from Django context
+            "amount": "{{ total_price|floatformat:2 }}", // Amount in paise (multiplied by 100)
+            "currency": "INR",
+            "name": "Urban Cart",
+            "description": "Order Payment",
+            "image": "https://example.com/your_logo", 
+            "order_id": "{{ razorpay_order_id }}",  // Order ID from Django
+            "handler": function (response) {
+                alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                window.location.href = "/payments/success/?payment_id=" + response.razorpay_payment_id;
+            },
+            "prefill": {
+                "name": "{{ request.user.username }}",
+                "email": "{{ request.user.email }}",
+                "contact": "{{ user_profile.phone }}"  // Pass user phone from Django context
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+    
+        var rzp1 = new Razorpay(options);
+        
+        rzp1.on('payment.failed', function (response) {
+            alert("Payment Failed!");
+            console.error(response.error);
+        });
+    
+        document.getElementById('rzp-button1').onclick = function (e) {
+            rzp1.open();
+            e.preventDefault();
+        };
+    </script>
+
+
+{% endblock %}
+
+	
+	

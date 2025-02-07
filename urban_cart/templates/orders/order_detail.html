@@ -1,0 +1,94 @@
+{% extends 'home/base.html' %}
+{% block title %}
+URBAN CART
+{% endblock %}
+{% block content %}
+
+<section id="cart_items">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li class="active">Order Details</li>
+              </ol>
+
+        </div>
+        <div class="header" style="text-align: center;"><h2>My Orders Details</h2></div>
+        <div class="table-responsive cart_info text-center">
+            <h2>Order #{{ order.id }}</h2>
+            <p><strong>Date:</strong> {{ order.created_at|date:"Y-m-d H:i" }}</p>
+            <p><strong>Status:</strong> {{ order.status }}</p>
+            <p><strong>Total Price:</strong> Rs {{ order.total_price }}</p>
+
+        </div>
+        <div class="table-responsive cart_info text-center">
+            <h3>Shipping Address</h3>
+                {% if order.address %}
+            <p>{{ order.address.address }}, {{ order.address.state }}, {{ order.address.district }}</p>
+                {% else %}
+            <p>No address provided.</p>
+                {% endif %}
+
+        </div>
+        <div class="table-responsive cart_info">
+            <h3 style="text-align: center;">Order Items</h3>
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu" style="text-align: center;">
+                        <th class="quantity">Product</th>
+                        <th class="quantity">Quantity</th>
+                        <th class="quantity">Price</th>
+                        <th class="quantity">Subtotal</th>
+                        <th class="quantity">Status</th>
+                    </tr>
+                </thead>
+                <tbody style="justify-content: space-between;">
+                    {% for item in order_items %}
+                    <tr>
+                        <td class="cart_product"  >
+                            <h4>{{ item.product.name }}</h4>
+
+                        </td>
+                        <td class="cart_price"  >
+                            <h4>{{ item.quantity }}</h4>
+
+                        </td>
+                        <td class="cart_quantity"  >
+                            <h4>Rs {{ item.price }}</h4>
+
+                        </td>
+                        <td class="cart_total"  >
+                            <h4>Rs {{ item.subtotal }}</h4>
+
+                        </td>
+                        <td class="cart_total"  >
+                            <h4> {{ order.status }}
+                                {% if order.status != "Completed" %}
+                            <a href="{% url 'mark_order_complete' order.id %}">
+                            <button class="btn btn-default add-to-cart">Delivery Completed</button>
+                            </a>
+                                 
+                                 {% endif %}
+                            </h4>
+
+                        </td>
+                    </tr>
+
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+
+
+{% endblock %}

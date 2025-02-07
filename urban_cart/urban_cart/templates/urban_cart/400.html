@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>400 - Server Error</title>
+    <!-- Simplified CSS for error pages -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .logo img {
+            max-width: 100px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <a href="{% url 'index' %}">
+                <img src="{% static 'urban_cart/images/home/logo.png' %}" alt="Logo">
+            </a>
+        </div>
+        <h1>400 - Server Error</h1>
+        <p>We're sorry, but something went wrong on our end. Please try again later.</p>
+        <a href="{% url 'index' %}">Return to Homepage</a>
+    </div>
+</body>
+</html>

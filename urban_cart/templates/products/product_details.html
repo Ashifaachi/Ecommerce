@@ -1,0 +1,274 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title %}
+URBAN CART
+{% endblock %}
+
+{% block content %}
+
+<section>
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm-12 padding-right">
+                <div class="product-details" style="min-height: 500px;"><!--product-details-->
+                    {% if product %}
+                    <div class="col-sm-5">
+                        <div class="view-product">
+                            <img src="{{ product.image_url }}" alt="" />
+                            
+                        </div>
+                    
+
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="product-information"><!--/product-information-->
+                            
+                            <h2>{{ product.name }}</h2>
+                            <p>Product ID : {{ product.id }}</p>
+                            
+                            <span>
+                                <span>RS  {{ product.discount_price }}</span>
+                                <label>Quantity:</label>
+                                <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                                    {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <input type="text" value="1" name="quantity" />
+                                <button type="submit" class="btn btn-fefault cart">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    Add to cart
+                                </button>
+                                </form>
+                            </span>
+                            <p>Actual Price :  {{ product.actual_price }}</p>
+                            <p><b>Availability:</b> In Stock</p>
+                            <p><b>Condition:</b> New</p>
+                            <p><b>Category:</b> {{ product.sub_category }}</p>
+                            <p><b>Brand : </b> {{ product.manufacturer }}</p>
+
+                            <a href=""><img src="{% static 'images/product-details/share.png' %}" class="share img-responsive"  alt="" /></a>
+                        </div><!--/product-information-->
+                    </div>
+                    {% endif %} 
+                </div><!--/product-details-->
+
+
+
+
+
+
+<!-- Recommended Items Section -->
+<div class="recommended_items">
+    <h2 class="title text-center">Recommended Items</h2>
+    {% if recommended_products %}
+        <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel" data-interval="3000">
+            <div class="carousel-inner">
+                {% for rec_product in recommended_products %}
+                    {% if forloop.counter0|divisibleby:3 %}
+                        <div class="item {% if forloop.first %}active{% endif %}">
+                    {% endif %}
+                    
+                    <div class="col-sm-4">
+                        <div class="product-image-wrapper">
+                            <div class="single-products">
+                                <div class="productinfo text-center" style="max-height: 500px; min-height: 500px;">
+                                    <a href="{% url 'product_details' rec_product.id %}">
+                                        <img style="max-height: 200px; min-height: 200px;" src="{{ rec_product.image }}" alt="{{ rec_product.name }}" />
+                                        <h2>RS {{ rec_product.discount_price }}</h2>
+                                        <h4><del style="color: #817f7f;">RS {{ rec_product.actual_price }}</del></h4>
+                                        <p>{{ rec_product.name }}</p>
+                                    </a>
+                                    <a href="{% url 'cart' %}" class="btn btn-default add-to-cart">
+                                        <i class="fa fa-shopping-cart"></i> Add to cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if forloop.counter|divisibleby:3 or forloop.last %}
+                        </div> <!-- Closes "item" after every 3 items -->
+                    {% endif %}
+                {% empty %}
+                    <p>No content-based recommendations available.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+            <i class="fa fa-angle-left"></i>
+        </a>
+        <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+            <i class="fa fa-angle-right"></i>
+        </a>
+    {% else %}
+        <p>No recommendations available at the moment.</p>
+    {% endif %}
+</div>
+
+        
+                
+                <div class="category-tab shop-details-tab"><!--category-tab-->
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs">
+                            
+                            <li class="active"><a href="#reviews" data-toggle="tab">Reviews ({{ reviews.count }})</a></li>
+                        </ul>
+                    </div>
+                    <!-- <div class="tab-content"> -->
+                        
+                        
+                        
+                        
+                        
+                        
+                        <!-- <div class="tab-pane fade active in" id="reviews" >
+                            <div class="col-sm-12">
+                                {% if reviews %}
+                                {% for review in reviews %}
+                                <div class="review-item">
+                                <ul>
+                                     Debug information
+                                    <li style="display: none;">User object: {{ review.user }}</li>
+                                    <li style="display: none;">User fields: {{ review.user.email }} - {{ review.user.name }}</li>
+                                     End debug
+                                    <li><a href=""><i class="fa fa-user"></i>{{ review.user }}</a></li>
+
+                                    <li><a href=""><i class="fa fa-clock-o"></i>{{ review.created_at|date:"h:i A" }}</a></li>
+                                    <li><a href=""><i class="fa fa-calendar-o"></i>{{ review.created_at|date:"d M Y" }}</a></li>
+                                </ul>
+                                <div class="rating">
+                                    {% for i in "12345" %}
+                                        {% if forloop.counter <= review.rating %}
+                                        
+                                            <i class="fa fa-star" style="color: #FE980F;""></i>
+                                        {% else %}
+                                            <i class="fa fa-star-o" style="color: #FE980F;"></i>
+                                        {% endif %}
+
+                                    {% endfor %}
+                                </div>
+                                <p>{{ review.comment }}</p>
+                                </div>
+                                {% endfor %}
+                                {% else %}
+                                <p>No reviews available for this product.</p>
+                                {% endif %}
+
+                                {% if user.is_authenticated %}
+                                <p><b>Write Your Review</b></p>
+                                
+
+                                <form action="{% url 'product_details' product.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label>Rating:</label>
+                                        <select name="rating" class="form-control" required>
+                                            <option value="">Select Rating</option>
+                                            <option value="5">5 - Excellent</option>
+                                            <option value="4">4 - Very Good</option>
+                                            <option value="3">3 - Good</option>
+                                            <option value="2">2 - Fair</option>
+                                            <option value="1">1 - Poor</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <textarea name="comment" placeholder="Your Review" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-default pull-right">
+                                        Submit
+                                    </button>
+                                </form>
+                                {% else %}
+                                <p>Please <a href="{% url 'login' %}">login</a> to write a review.</p>
+                                {% endif %}
+                            </div>
+                        </div> -->
+
+
+                        <!-- Reviews Tab -->
+
+    
+        
+           <!-- </div> -->
+          
+
+
+           <div class="tab-content">
+            <div class="tab-pane fade active in" id="reviews">
+                <div class="col-sm-12">
+                    {% if reviews %}
+                        {% for review in reviews %}
+                        <div class="review-item">
+                            <ul>
+                                <li><a href=""><i class="fa fa-user"></i>{{ review.user.email }}</a></li>
+                                <li><a href=""><i class="fa fa-clock-o"></i>{{ review.created_at|date:"h:i A" }}</a></li>
+                                <li><a href=""><i class="fa fa-calendar-o"></i>{{ review.created_at|date:"d M Y" }}</a></li>
+                            </ul>
+                            <div class="rating">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= review.rating %}
+                                        <i class="fa fa-star" style="color: #FE980F;"></i>
+                                    {% else %}
+                                        <i class="fa fa-star-o" style="color: #FE980F;"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <p>{{ review.comment }}</p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No reviews available for this product.</p>
+                    {% endif %}
+            
+                    {% if request.user.is_authenticated %}
+                        <p><b>Write Your Review</b></p>
+                        <form action="{% url 'product_details' product.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Rating:</label>
+                                <select name="rating" class="form-control" required>
+                                    <option value="">Select Rating</option>
+                                    <option value="5">5 - Excellent</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="1">1 - Poor</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="comment" placeholder="Your Review" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-default pull-right">
+                                Submit
+                            </button>
+                        </form>
+                    {% else %}
+                        <p>Please <a href="{% url 'login' %}">login</a> to write a review.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+
+
+            
+           </div>
+
+
+
+
+
+                        
+                    
+                </div>
+                <!--/category-tab-->
+                
+        
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
