@@ -41,7 +41,7 @@ SECRET_KEY = 'django-insecure-vy$*+_ptt7gwpum#pwnz0t*6t)@#5#5o^b-8x9vxj0)gpk#ar_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = TrueSTATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Static files settings
 STATIC_URL = '/static/'
